@@ -68,7 +68,7 @@ class Animal {
 const workers: Array<Person> = [];
 workers[0] = new Person();
 workers[1] = new Employee();
-workers[2] = new Animal(); // error тип Animal не является Person или его поддтипом 
+workers[2] = new Animal(); // error тип Animal не является Person или его поддтипом
 
 //Создание собственных обобщений типов
 interface Comparator <T> {
@@ -152,3 +152,17 @@ switch (user.role) {
   case UserRole.Manager: console.log('Hide control panel'); break;
 }
 ///  Обеспечение возвращаемого типа функции высшего порядка
+const outerFunc = (someValue: number) => (multiplier: number) => someValue * multiplier;
+
+const innerFunc = outerFunc(10);
+let result = innerFunc(5);
+console.log(result)
+ ///
+ type numFunc<T> = (arg: T) => (c: number) => number;
+
+const noArgFunc: numFunc<void> = () => (c: number) => c + 5;
+const numArgFunc: numFunc<number> = (someValue: number) => (multiplier: number) => someValue * multiplier;
+const stringArgFunc: numFunc<string> = (someText: string) => (padding: number) => someText.length + padding;
+
+const createSumString: numFunc<number> = () => (x: number) => 'Hello'; //error
+
